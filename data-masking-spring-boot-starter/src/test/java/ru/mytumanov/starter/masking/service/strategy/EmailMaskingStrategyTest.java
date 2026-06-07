@@ -11,6 +11,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import ru.mytumanov.starter.masking.config.MaskingProperties.MaskRule;
 
+/**
+ * Тесты для стратегии маскирования email
+ */
 public class EmailMaskingStrategyTest {
     private EmailMaskingStrategy strategy;
     private MaskRule defaultRule;
@@ -22,7 +25,7 @@ public class EmailMaskingStrategyTest {
     }
 
     @ParameterizedTest
-    @DisplayName("Успешное маскирование email с дефолтными настройками (фиксированная длина маски)")
+    @DisplayName("Успешное маскирование email с настройками по умолчанию")
     @CsvSource({
             "mymailverysensitive@mail.ru, m***e@mail.ru",
             "alex@domain.com,             a***@domain.com",
