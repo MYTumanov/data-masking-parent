@@ -46,6 +46,15 @@
                         <parameters>true</parameters> <!-- Важно для Spring Boot 3 / Java 21, чтобы сохранять имена параметров -->
                     </configuration>
                 </plugin>
+                <!-- Падали тесты JUnit5 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.2.5</version>
+                    <configuration>
+                        <argLine>-Dnet.bytebuddy.experimental=true</argLine>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
