@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -26,10 +27,10 @@ public class PhoneMaskingStrategyTest {
     @ParameterizedTest
     @DisplayName("Успешное маскирование номеров телефонов с настройками по умолчанию")
     @CsvSource({
-            "+79254449922,      +7925***22",
-            "+229254449922,     +22925***22",
-            "+3339254449922,    +333925***22",
-            "+3331234,          +333***4"
+            "+79254449922,      +79***9922",
+            "+229254449922,     +229***9922",
+            "+3339254449922,    +333***9922",
+            "+3331234,          +3***234"
 
     })
     void shouldMaskPhoneWithDefaultSettings(String input, String expected) {
@@ -41,10 +42,10 @@ public class PhoneMaskingStrategyTest {
     @ParameterizedTest
     @DisplayName("Успешное маскирование номеров телефонов с сохранением длины")
     @CsvSource({
-            "+79254449922,      +7925*****22",
-            "+229254449922,     +22925*****22",
-            "+3339254449922,    +333925*****22",
-            "+3331234,          +333***4"
+            "+79254449922,      +79*****9922",
+            "+229254449922,     +229*****9922",
+            "+3339254449922,    +333******9922",
+            "+3331234,          +3***234"
     })
     void shouldMaskPhoneWithKeepLengthTrue(String input, String expected) {
         defaultRule.setKeepLength(true);
@@ -54,12 +55,12 @@ public class PhoneMaskingStrategyTest {
         assertEquals(expected, result);
     }
 
-    @ParameterizedTest
+    @Test
     @DisplayName("Успешное маскирование номеров телефонов с катомным символом маскировки")
     void shouldMaskPhoneWithCustomMaskChar() {
         defaultRule.setMaskChar("#");
         String phone = "+79254449922";
-        String planResult = "+7925###22";
+        String planResult = "+79###9922";
 
         String result = strategy.mask(phone, defaultRule);
 
