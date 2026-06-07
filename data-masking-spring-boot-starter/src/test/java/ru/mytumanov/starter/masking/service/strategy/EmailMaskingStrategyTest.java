@@ -33,9 +33,6 @@ public class EmailMaskingStrategyTest {
             "a@work.org,                  a***@work.org"
     })
     void shouldMaskEmailWithDefaultSettings(String input, String expected) {
-        defaultRule.setMaskChar("*");
-        defaultRule.setKeepLength(false);
-
         String result = strategy.mask(input, defaultRule);
 
         assertEquals(expected, result);
@@ -51,7 +48,6 @@ public class EmailMaskingStrategyTest {
             "a@work.org,                  *@work.org"
     })
     void shouldMaskEmailWithKeepLengthTrue(String input, String expected) {
-        defaultRule.setMaskChar("*");
         defaultRule.setKeepLength(true);
 
         String result = strategy.mask(input, defaultRule);
@@ -81,9 +77,6 @@ public class EmailMaskingStrategyTest {
             "plaintext"
     })
     void shouldHandleEdgeCases(String input) {
-        defaultRule.setMaskChar("*");
-        defaultRule.setKeepLength(false);
-
         String result = strategy.mask(input, defaultRule);
 
         assertEquals(input, result);
