@@ -13,6 +13,7 @@ public class UserDto {
     @Mask(type = MaskType.EMAIL)
     private String email;
 
+    @Mask(type = MaskType.PHONE)
     private String phoneNumber;
 
     private String lastName;
