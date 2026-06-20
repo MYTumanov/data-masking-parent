@@ -48,16 +48,24 @@ public class MaskingJacksonSerializer extends JsonSerializer<String> implements 
             return this;
         }
 
-        if (property.getType().getRawClass() != String.class) {
+        if (!property.getType().isTypeOrSubTypeOf(String.class)) {
             return provider.findValueSerializer(property.getType(), property);
         }
 
-        Mask maskAnnotation = property.getAnnotation(Mask.class);
-        if (maskAnnotation == null) {
+        Mask ann = property.getAnnotation(Mask.class);
+        if (ann == null && property.getMember() != null) {
+            ann = property.getMember().getAnnotation(Mask.class);
+        }
+
+        if (ann == null) {
             return provider.findValueSerializer(property.getType(), property);
         }
 
-        return new MaskingJacksonSerializer(this.maskingService, maskAnnotation);
+        if (maskingService == null) {
+            throw new IllegalStateException("MaskingService is not available for contextual serializer");
+        }
+
+        return new MaskingJacksonSerializer(maskingService, ann);
     }
 
     /**
@@ -78,6 +86,14 @@ public class MaskingJacksonSerializer extends JsonSerializer<String> implements 
      */
     @Override
     public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        if (value == null) {
+            gen.writeNull();
+            return;
+        }
+        if (maskingService == null || maskAnnotation == null) {
+            gen.writeString(value);
+            return;
+        }
         MaskType maskType = this.maskAnnotation.type();
         String maskedValue = maskingService.mask(value, maskType);
         gen.writeString(maskedValue);
