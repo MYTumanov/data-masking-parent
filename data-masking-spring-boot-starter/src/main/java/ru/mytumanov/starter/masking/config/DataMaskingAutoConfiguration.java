@@ -13,7 +13,9 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 
 import ru.mytumanov.starter.masking.service.MaskingService;
 import ru.mytumanov.starter.masking.service.strategy.EmailMaskingStrategy;
+import ru.mytumanov.starter.masking.service.strategy.FullNameMaskingStrategy;
 import ru.mytumanov.starter.masking.service.strategy.MaskingStrategy;
+import ru.mytumanov.starter.masking.service.strategy.PanMaskingStrategy;
 import ru.mytumanov.starter.masking.service.strategy.PhoneMaskingStrategy;
 import ru.mytumanov.starter.masking.jakson.MaskingJacksonAnnotationIntrospector;
 
@@ -33,6 +35,16 @@ public class DataMaskingAutoConfiguration {
     @Bean
     public MaskingStrategy phoneMaskingStrategy() {
         return new PhoneMaskingStrategy();
+    }
+
+    @Bean
+    public MaskingStrategy panMaskingStrategy() {
+        return new PanMaskingStrategy();
+    }
+
+    @Bean
+    public MaskingStrategy fullNameMaskingStrategy() {
+        return new FullNameMaskingStrategy();
     }
 
     @Bean
