@@ -33,15 +33,6 @@ public class MaskingJacksonSerializer extends JsonSerializer<String> implements 
     /**
      * Создает контекстный сериализатор на основе информации о сериализуемом
      * свойстве.
-     * <p>
-     * Метод проверяет наличие аннотации {@link Mask} на сериализуемом свойстве.
-     * Если свойство не задано (равно {@code null}), возвращается стандартный
-     * сериализатор для {@link String}.
-     * Если аннотация {@link Mask} отсутствует, возвращается стандартный
-     * сериализатор для типа свойства.
-     * Если аннотация присутствует, возвращается соответствующим образом настроенный
-     * сериализатор.
-     * </p>
      *
      * @param provider провайдер сериализаторов, используемый для поиска стандартных
      *                 сериализаторов.
@@ -54,7 +45,11 @@ public class MaskingJacksonSerializer extends JsonSerializer<String> implements 
     public JsonSerializer<?> createContextual(SerializerProvider provider, BeanProperty property)
             throws JsonMappingException {
         if (property == null) {
-            return provider.findNullValueSerializer(null);
+            return this;
+        }
+
+        if (property.getType().getRawClass() != String.class) {
+            return provider.findValueSerializer(property.getType(), property);
         }
 
         Mask maskAnnotation = property.getAnnotation(Mask.class);

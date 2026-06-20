@@ -8,22 +8,43 @@ import java.util.*;
 public class UserRepositoryInMem implements UserRepository {
     private final static Map<UUID, UserDto> users = new HashMap<>();
 
-    //    init
+    // init
     static {
         UserDto user1 = new UserDto();
+        UserAddresDto address1 = new UserAddresDto();
+
+        address1.setEmail("mymail@mail.ru");
+        address1.setPhoneNumber("+79254719928");
+
         user1.setId(UUID.randomUUID());
         user1.setEmail("mymail@mail.ru");
         user1.setPhoneNumber("+79254719928");
+        user1.setPhoneNumberLong(79254719928L);
+        user1.setAddress(new ArrayList<UserAddresDto>(List.of(address1)));
 
         UserDto user2 = new UserDto();
+        UserAddresDto address2 = new UserAddresDto();
+
+        address2.setEmail("mymail@mail.ru");
+        address2.setPhoneNumber("+79254719928");
+
         user2.setId(UUID.randomUUID());
         user2.setEmail("mymaillong@gmail.com");
         user2.setPhoneNumber("+7(925)4719928");
+        user2.setPhoneNumberLong(79254719928L);
+        user2.setAddress(new ArrayList<UserAddresDto>(List.of(address2)));
 
         UserDto user3 = new UserDto();
+        UserAddresDto address3 = new UserAddresDto();
+
+        address3.setEmail("mymail@mail.ru");
+        address3.setPhoneNumber("+79254719928");
+
         user3.setId(UUID.randomUUID());
         user3.setEmail("mt@mail.ru");
         user3.setPhoneNumber("+719254719928");
+        user3.setPhoneNumberLong(79254719928L);
+        user3.setAddress(new ArrayList<UserAddresDto>(List.of(address2)));
 
         users.put(user1.getId(), user1);
         users.put(user2.getId(), user2);

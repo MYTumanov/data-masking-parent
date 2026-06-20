@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import ru.mytumanov.starter.masking.service.MaskingService;
 import ru.mytumanov.starter.masking.service.strategy.EmailMaskingStrategy;
 import ru.mytumanov.starter.masking.service.strategy.MaskingStrategy;
+import ru.mytumanov.starter.masking.service.strategy.PhoneMaskingStrategy;
 import ru.mytumanov.starter.masking.jakson.MaskingJacksonAnnotationIntrospector;
 
 /**
@@ -25,9 +26,13 @@ import ru.mytumanov.starter.masking.jakson.MaskingJacksonAnnotationIntrospector;
 public class DataMaskingAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean
     public MaskingStrategy emailMaskingStrategy() {
         return new EmailMaskingStrategy();
+    }
+
+    @Bean
+    public MaskingStrategy phoneMaskingStrategy() {
+        return new PhoneMaskingStrategy();
     }
 
     @Bean
